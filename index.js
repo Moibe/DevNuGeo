@@ -1,7 +1,7 @@
 let permiso;
 let map;
 let window_aceptar_permiso = true;
-//desarrollo
+//dev
 
 
 //Idioma
