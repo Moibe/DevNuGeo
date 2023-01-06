@@ -1,20 +1,19 @@
-
 let permiso;
 let map;
 let window_aceptar_permiso = true;
-let local_storage_available;
+let referido; 
 let visitas;
-
-//localStorage.clear();
-
 //prod
-console.log("ESTO ES EL REFERRER DE OUTPUT:");
-console.log(document.referrer);
+
 
 //Idioma
 let idioma; 
 let producto;
 const hostname = window.location.hostname;
+
+console.log("ESTO ES EL REFERRER DE OUTPUT:");
+console.log(document.referrer);
+
 
 const pathname = window.location.pathname;
 console.log("Ésto es PATHNAME:");
@@ -30,8 +29,9 @@ let venta2 = document.getElementById('venta1_text2');
 let venta3 = document.getElementById('venta1_text3');
 let venta4 = document.getElementById('venta1_text4');
 
-let paso = 1; 
-
+let paso = 4; 
+//Aquí en output.js el paso será directamente el 4 para saltar todo 
+//Después se limpiará el código para no tener que indicarlo y que lo haga directo ya que las otras funciones no existirán en éste JS.
 
 let marker_inicial;
 var circle;
@@ -69,25 +69,46 @@ const locate_sample = document.getElementById("locate_sample");
 // Elementos de la segunda sección:
 const glassDisplay = document.getElementById('glassDisplay');
 
+btnSubmit.addEventListener('beforeunload', function(e) {
+    var myPageIsDirty = true; //you implement this logic...
+    if(myPageIsDirty) {
+      //following two lines will cause the browser to ask the user if they
+      //want to leave. The text of this dialog is controlled by the browser.
+      e.preventDefault(); //per the standard
+      e.returnValue = ''; //required for Chrome
+    }
+    //else: user is allowed to leave without a warning dialog
+  });
+
 function iniciar(){
-    
-   console.log("Space before first global cart display...");
+ 
+   console.log("Guardamos la visita desde...");
    console.log(document.referrer);
+   sumaVisita();
    primerMapa();
 
 setTimeout(() => {
   
     setIdiomaProducto();
     setPrecios();
-    getReferrer();
+    //Test sin getReferrer, ver si output funciona.
+    //getReferrer();
     variables_index();
     setTimeout(() => {
  
+        //Aquí no implementeremos setSellButton;
+        //setSellButton();
+
+        setTimeout(() => {
+ 
         
-        setSellButton();
+            busquedaPaso3();
+            
+        
+        }, 1 * 1000);
         
     
-    }, 2 * 1000);
+    }, 1 * 1000);
  
 }, 2 * 1000);
 }
@@ -104,27 +125,8 @@ function primerMapa(){
 
 map = new L.map('map' , mapOptions, { zoomControl:false });
 
-/* var gl = L.mapboxGL({
-    attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-    style: 'https://api.maptiler.com/maps/086ae9b3-1710-4dd4-8c1d-b0329d5778a7/style.json?key=tQdXtnpaX5QclVTl8hct'
-  }).addTo(map); */
-
-//mapboxgl.accessToken = 'pk.eyJ1IjoibW9pYmUxODIiLCJhIjoiY2w2eGRkamdwMnFyMzNjdGVibnBpajNtaiJ9.FVn7wRlJyxw-lLzDu4T9RA';
-
-  /* var gl = L.mapboxGL({
-    attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
-    style: 'mapbox://styles/moibe182/cl6x96lhj001w14o6k2psrzk4'
-  }).addTo(map); */
-
 let layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 map.addLayer(layer);
-
-/* map.touchZoom.disable();
-map.doubleClickZoom.disable();
-map.scrollWheelZoom.disable(); 
-map.boxZoom.disable();
-map.keyboard.disable();
-map.zoomControl.disable(); */
 
 }
 
@@ -241,7 +243,7 @@ function getReferrer(){
         if (referido ==""){
             console.log("Referido está vacío...");
             //Como el referido está vacío significa que entraron directamente y por lo tanto debe irse al proceso ALTERNO (divrows).
-            redireccionador();
+            //redireccionador();
         }else{
             console.log("Referido es:");
             console.log(referido);
@@ -295,38 +297,18 @@ retry_delay = 3;
 remap_delay = 14; 
 sell_delay = 15;
 paneo_delay = 2;
-tel_field.placeholder = placeholder_text;
-
-visitas = JSON.parse(localStorage.getItem('visita_conversion')); 
-console.log("Esto es visitas después de extraerlo del localStorage;")
-console.log("Undefined is non-existant...");
-
-//Revisa si existe visita_conversion.
-if(visitas == undefined){
-    //Si no existe visitas conversión, es que nunca ha visitado el sitio. Y se debe crear en ceros.
-    console.log("Visitas es undefined...");
-    console.log("Por lo tanto lo crearemos...");
-    localStorage.setItem('visita_conversion', JSON.stringify(0));
-}
-else{
-    //Si sí existe no hagas nada
-    console.log("Visitas si está definido y es:");
-    console.log(visitas);
-    localStorage.setItem('visita_conversion', JSON.stringify(0));
-    console.log("Pero ahora de nuevo vale:");
-    visitas = JSON.parse(localStorage.getItem('visita_conversion')); 
-    console.log(visitas);
-}
+//NOT NEEDED AT OUTPUT...
+// tel_field.placeholder = placeholder_text;
 
 //Inicialiación del botón Principal.
 const btnSubmit = document.getElementById('btnSubmit');
-btnSubmit.value = btnSubmit_text;
-btnSubmit.addEventListener('click', startProcess);
+//NOT NEEDED AT OUTPUT...
+/* btnSubmit.value = btnSubmit_text;
+btnSubmit.addEventListener('click', startProcess); */
 }
-
-
+ 
 function startProcess(){
-    console.log("Starting overall process...");
+    console.log("Estamos iniciando el proceso...");
     if (phoneValidate() == true){
         
         busquedaPaso1();
@@ -334,12 +316,14 @@ function startProcess(){
     else{
         console.log("El teléfono no fue válido...");
     }
+
   }
 
 function keepProcess(){
     console.log("Continuamos el proceso...");
     if (phoneValidate() == true){
-         busquedaPaso3();
+        
+        busquedaPaso3();
     }
     else{
         console.log("El teléfono no fue válido...");
@@ -428,7 +412,7 @@ function busquedaPaso2(){
     btnGlass.style.display = 'none';
     //Desaparece los textos que haya habido previamente.
     textRowArea.innerHTML = "";
-    console.log("Processing @ busquedaPaso2()...");
+    console.log("Estoy en busquedaPaso2()...");
    
     addTextRow(glass2_text1, 1 ,"intro_uno", writingGlass);
     addTextRow(glass2_text2, 3 ,"intro_dos", writingGlass);
@@ -437,7 +421,7 @@ function busquedaPaso2(){
 
     setTimeout(() => {
 
-        creaMapa();
+        creaMapa(posicion_stored);
         glassDisplay.style.display = 'none';
         query.style.display = 'block';
         query.style.top = '60%';
@@ -458,31 +442,27 @@ function busquedaPaso2(){
 function busquedaPaso3(){
     //El paso 3 es el que desplegará el mapa final, el mapa que estás vendiendo y entregarás después del pago.
        
-        query.style.display = 'none';
-        glassDisplay.style.display = 'block';
-        //Desaparece los textos que haya habido previamente.
-        console.log("Estoy en el paso 3, desapareciendo los textos anteriores.");
-        textRowArea.innerHTML = "";
-        console.log("Estoy en el Paso 3:");
-        addTextRow(glass3_text1, 1 ,"intro_cerp", writingGlass);
-        addTextRow(glass3_text2, 3 ,"intro_uno", writingGlass);
-        addTextRow(glass3_text3, 5 ,"intro_dos", writingGlass);
-        addTextRow(glass3_text4, 7 ,"intro_tres", writingGlass);
-        addTextRow(glass3_text5, 9 ,"intro_cuatro", writingGlass);
-        addTextRow(glass3_text6, 12 ,"intro_cuatro", writingGlass);
-
         //y ahora hacemos tiempo para que despliegue el nuevo mapa.
         setTimeout(() => {
-  
+        
+        //EN ESTE PUNTO ES DONDE NECESITO DARLE EL LOCALSTORAGE O SI NO VOLVER A BUSCAR:
+
+        //Checho localstorage y lo uso. 
+
+        //Si no, lanzo handlepermissions y subsequientes.
+
+
         creaMapa();
         glassDisplay.style.display = 'none';
-        textRowArea.innerHTML = "";
-
+        
              setTimeout(() => {
            
-                glassDisplay.style.display = 'block';
-                blockDisplay.style.display = 'block';
-                busquedaPaso4();
+                //Ya no se harán éstas acciones porque ya pagó:
+                //glassDisplay.style.display = 'block';
+                //blockDisplay.style.display = 'block';
+                //busquedaPaso4();
+                //En cambio si podríamos agregar la acción de que aparezca la glasswindo chica diciendo, aquí está tu resultado.
+                //Y más adelante incluso invitando a suscribirte a las notificaciones de cambios.
 
         }, sell_delay * 1000);
  
@@ -497,7 +477,6 @@ function busquedaPaso3(){
     btnForm.value = btnForm_text;
     venta1.innerHTML = venta1_text1;
     venta2.innerHTML = venta1_text2;
-    
  
     setTimeout(() => {
 

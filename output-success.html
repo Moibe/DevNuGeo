@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
     <head>
-        <title>Welcome to Geosignal Services</title>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="stylesheet" href="index.css">
@@ -16,9 +15,9 @@
         
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mapbox-gl/1.13.1/mapbox-gl.min.css" />
 
-<!-- Google Tag Manager -->
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TX6PCJ"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+         <!-- Google Tag Manager -->
+         <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TX6PCJ"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function (w, d, s, l, i) {
   w[l] = w[l] || [];
   w[l].push({'gtm.start':
@@ -47,12 +46,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                  
                     <div id="map"></div>
 
-                    <div id="query" style="display: block;">
+                    <!-- Quité el campo que pide teléfono porque aquí no se usará, quitar todo el código después. -->
+                    <!-- <div id="query" style="display: block;">
                         <input id="tel_field" type="text" name="telefono" class="required internationalPhone" minlength="8" maxlength="15" autocomplete="off" />
                         <p id="mensajes" style="display: none;"></p>
                         <br>
                         <input id="btnSubmit" type="button" />
-                    </div>
+                    </div> -->
 
                     <div id="glassDisplay" style="display: none;">
                         <div id="writingGlass" class="fuentes"></div>
@@ -81,7 +81,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </div>
          </body>
         <!-- Puse el json hasta arriba porque el orden de lectura si importa! -->
-        <script src="./index.js"></script>
+        <script src="./output.js"></script>
         <script src="./manejadorPermisos.js"></script>
         <script type="text/javascript" src="traducciones.json"></script>
         <script src="./translations.js"></script>
